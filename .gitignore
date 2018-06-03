@@ -1,0 +1,11 @@
+logs
+target
+build
+.DS_Store
+/.idea
+/.idea_modules
+/.classpath
+/.project
+/.settings
+/.gradle
+/RUNNING_PID
