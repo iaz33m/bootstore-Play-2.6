@@ -4,14 +4,39 @@
 
 # An example controller showing a sample home page
 
+# Web Services
+->      /api                        api.Routes
+# auth routes
+
+GET     /auth/sendMail              controllers.AuthController.sendEmail()
+GET     /auth/register              controllers.AuthController.register()
+POST    /auth/register              controllers.AuthController.save()
+
+GET     /auth/login                 controllers.AuthController.login()
+GET     /auth/logout                controllers.AuthController.logout()
+POST    /auth                       controllers.AuthController.auth()
+
+
 GET     /                           controllers.BooksController.index()
 GET     /books/create               controllers.BooksController.create()
 GET     /books/:id                  controllers.BooksController.show(id : Integer)
 GET     /books/edit/:id             controllers.BooksController.edit(id: Integer)
-PUT     /books/edit                 controllers.BooksController.update()
+POST    /books/edit/:id             controllers.BooksController.update(id:Integer)
 POST    /books/create               controllers.BooksController.save()
-DELETE  /books/delete/:id           controllers.BooksController.destroy(id: Integer)
+DELETE  /books/:id                  controllers.BooksController.destroy(id: Integer)
+
+# author routes
+
+GET     /authors                    controllers.AuthorController.index()
+DELETE  /authors/:email             controllers.AuthorController.destroy(email: String)
+
+# Tags routes
+
+GET     /tags                       controllers.TagsController.index()
+GET     /tags/:id                   controllers.TagsController.show(id : Integer)
+POST    /tags                       controllers.TagsController.save()
 
 # Map static resources from the /public folder to the /assets URL path
 
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+

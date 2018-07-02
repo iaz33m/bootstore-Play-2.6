@@ -23,3 +23,7 @@ libraryDependencies += "org.awaitility" % "awaitility" % "2.0.0" % Test
 testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
 
 libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.41"
+libraryDependencies += "org.mindrot" % "jbcrypt" % "0.3m"
+
+libraryDependencies += "com.typesafe.play" %% "play-mailer" % "6.0.1"
+libraryDependencies += "com.typesafe.play" %% "play-mailer-guice" % "6.0.1"

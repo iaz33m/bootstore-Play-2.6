@@ -1,14 +1,27 @@
-@(bookFrom : Form[Book])
+@(bookForm : Form[Book],authors:List[User],tags:List[Tag])
 @import helper._
 @import views.html.partials._booksFormFields
 
-@layout("Edit Book"){
+@header = {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+}
+
+@footer = {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="//cdn.ckeditor.com/4.9.2/basic/ckeditor.js"></script>
+    <script>CKEDITOR.replace( 'ckEditor' );</script>
+    <script type="text/javascript">
+            $("#tags-selection").select2();
+    </script>
+}
+
+@layout("Edit Book",header,footer){
     <h1>Edit Book</h1>
 
-    @helper.form(action = routes.BooksController.update(),'id->"bookUpdateForm"){
-        @_booksFormFields(bookFrom)
+    @helper.form(action = routes.BooksController.update(bookForm.get.id),'enctype -> "multipart/form-data"){
+
+        @_booksFormFields(bookForm,authors,bookForm.get.author.email,tags,bookForm.get.tags)
+
+        <button class="btn btn-success" type="submit">Edit Book</button>
     }
-
-    <button class="btn btn-primary" onclick="sendPutRequest('bookUpdateForm','@routes.BooksController.edit(bookFrom.get().id)')">Edit Book</button>
-
 }

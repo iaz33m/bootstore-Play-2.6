@@ -1,8 +1,53 @@
 @import helper._
 
-@(bookFrom : Form[Book])
-@CSRF.formField
-@helper.inputText(bookFrom("id"),'class -> "form-control")
-@helper.inputText(bookFrom("title"),'class -> "form-control")
-@helper.inputText(bookFrom("price"),'class -> "form-control")
-@helper.inputText(bookFrom("author"),'class -> "form-control")
+@(bookFrom : Form[Book],authors:List[User],authorEmail:String,tags:List[Tag],booktags:List[Tag])
+
+    @CSRF.formField
+
+    @if(authorEmail != null){
+        <div class="form-group">
+            <img width="100px" class="img img-responsive" src="/assets/uploads/@bookFrom.get.cover">
+        </div>
+    }
+
+    @helper.inputText(bookFrom("title"),'class -> "form-control")
+    @helper.inputText(bookFrom("price"),'class -> "form-control")
+
+    <div class="form-group">
+        <label for="cover">Book Cover Image</label>
+        <input type="file" name="cover">
+    </div>
+
+    <div class="form-group">
+        <label for="author_email">Select author:</label>
+        <select class="form-control" name="author_email" id="author_email">
+            @for(author <- authors){
+                <option value="@author.email"
+                    @if(authorEmail!=null){
+                        @if(authorEmail.equals(author.email)){selected}
+                    }
+                >@author.name</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="tags-selection">Tags</label>
+        <select class="form-control" multiple="multiple" name="tagIds[]" id="tags-selection">
+            @for(tag <- tags){
+                <option value="@tag.id" @if(booktags.contains(tag)){selected="selected"}>@tag.name</option>
+            }
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <textarea name="details" class="form-control" id="ckEditor">
+            @if(authorEmail!=null){
+                @bookFrom.get.details
+            }
+        </textarea>
+
+    </div>
+

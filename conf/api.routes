@@ -1,0 +1,10 @@
+
+# book routes
+
+GET     /v1/books               controllers.API.BookAPIController.index()
+
+# tag routes
+GET     /v1/tags                controllers.API.TagAPIController.index()
+POST    /v1/tags                controllers.API.TagAPIController.save()
+PUT     /v1/tags/:id            controllers.API.TagAPIController.update(id:Integer)
+DELETE  /v1/tags/:id            controllers.API.TagAPIController.destroy(id:Integer)

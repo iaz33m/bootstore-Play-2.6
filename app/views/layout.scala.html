@@ -1,4 +1,6 @@
-@(title : String )(body: Html)
+@import controllers.Auth.Secured
+
+@(title : String,header:Html = Html(""),footer:Html = Html(""))(body: Html)
 <html>
     <head>
         <title>@title</title>
@@ -9,6 +11,7 @@
 
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
 
+        @header
 
     </head>
     <body>
@@ -26,12 +29,34 @@
                     </div>
                     <div class="collapse navbar-collapse"  id="exnav">
                         <ul class="nav navbar-nav navbar-left">
-                            <li><a href="@routes.BooksController.index()">
-                                <i class="glyphicon glyphicon-book"></i>
-                                All Books</a></li>
-                            <li><a href="@routes.BooksController.create()">
-                                <i class="glyphicon glyphicon-plus"></i>
-                                Create Book</a></li>
+
+                            @if(Secured.CHECK()){
+
+                                <li><a href="@routes.BooksController.index()">
+                                    <i class="glyphicon glyphicon-book"></i>
+                                    All Books</a></li>
+
+                                <li><a href="@routes.BooksController.create()">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    Create Book</a></li>
+
+                                <li><a href="@routes.TagsController.index()">Tags</a></li>
+
+                                <li><a href="@routes.AuthorController.index()">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                    Authors</a></li>
+
+                                <li><a href="#">@Secured.USER.name</a></li>
+
+                                <li><a href="@routes.AuthController.logout()">Logout</a></li>
+
+                            }
+
+                            @if(Secured.GUEST()){
+                                <li><a href="@routes.AuthController.register()">Register</a></li>
+                                <li><a href="@routes.AuthController.login()">Login</a></li>
+                            }
+
                         </ul>
                     </div>
                 </div>
@@ -56,5 +81,8 @@
         <script src="@routes.Assets.versioned("js/jquery-3.2.1.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.versioned("js/bootstrap.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.versioned("js/custom.js")" type="text/javascript"></script>
+
+        @footer
+
     </body>
 </html>

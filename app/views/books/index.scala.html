@@ -1,10 +1,33 @@
-@(books : List[Book])
+@(books : List[Book],title:String)
 
-@layout("All Books"){
-    <h1>All Books</h1>
-    @for(book <- books){
-        <a class="btn btn-link" href="@routes.BooksController.show(book.id)">@book.title</a>
-        <p>Price : @book.price</p>
-        <p>Author : @book.author</p>
-    }
+@layout(title){
+
+    <h2>@title</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Cover</th>
+                <th>Price</th>
+                <th>Tags</th>
+                <th>Author</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(book <- books){
+            <tr>
+                <td><a class="btn btn-link" href="@routes.BooksController.show(book.id)">@book.title</a></td>
+                <td><img width="100px" class="img img-responsive" src="/assets/uploads/@book.cover"></td>
+                <td>@book.price</td>
+                <td>@for(tag <- book.tags){
+                    @tag.name
+                }</td>
+                <td>@book.author.name</td>
+                <td><a class="btn btn-primary btn-sm" href="@routes.BooksController.edit(book.id)">Edit</a></td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
 }

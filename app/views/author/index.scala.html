@@ -1,0 +1,33 @@
+@(authors : List[User])
+@import helper._
+
+@layout("All Authors"){
+
+    <h2>All Authors</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(author <- authors){
+
+                <tr>
+                    <td>@author.name</td>
+                    <td>@author.email</td>
+                    <td>@author.address.streetAddress, @author.address.city, @author.address.country </td>
+                    <td><button class="btn btn-danger" onclick="sendDeleteRequest(
+                            '@routes.AuthorController.destroy(author.email)',
+                            '@routes.AuthorController.index()',
+                            '@CSRF.getToken.value'
+                    )">Delete</button></td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}

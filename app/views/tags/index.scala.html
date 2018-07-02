@@ -1,0 +1,52 @@
+@import helper._
+@(tagForm : Form[Tag],tags:List[Tag])
+
+@layout("Tags"){
+
+    <div class="row">
+
+        <div class="col-sm-4">
+            <h2>Create Tag</h2>
+            @helper.form(action = routes.TagsController.save()){
+
+                @CSRF.formField
+
+                @helper.inputText(tagForm("name"),'class -> "form-control")
+
+                <div class="form-group">
+                    <textarea class="form-control" name="description" ></textarea>
+                </div>
+
+                <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-plus"></i> Create Tag</button>
+            }
+        </div>
+
+        <div class="col-sm-8">
+            <h2>All Tags</h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for(tag <- tags){
+
+                    <tr>
+                        <td><a href="@routes.TagsController.show(tag.id)">@tag.name</a></td>
+                        <td>@tag.description</td>
+                        <td><button class="btn btn-danger" >Delete</button></td>
+                    </tr>
+                }
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+}

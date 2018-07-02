@@ -1,0 +1,60 @@
+@(registerForm : Form[User])
+@import helper._
+
+@layout("Register"){
+
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1>Register</h1>
+
+            @helper.form(action = routes.AuthController.save()){
+
+                @CSRF.formField
+                @helper.inputText(registerForm("name"),'class -> "form-control")
+                @helper.inputText(registerForm("email"),'class -> "form-control",'type -> "email",'required -> "required")
+                @helper.inputPassword(registerForm("password"),'class -> "form-control")
+
+                <div class="form-group">
+                    <fieldset>
+                        <legend>Address</legend>
+
+                        <div class="form-group row">
+
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" name="streetAddress" placeholder="Street Address" required>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <input class="form-control" type="text" name="city" placeholder="City" required>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <input class="form-control" type="text" name="state" placeholder="State" required>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-sm-3">
+                                <input class="form-control" type="text" name="country" placeholder="Country" required>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <input class="form-control" type="number" name="zipCode" placeholder="Zip Code" required>
+                            </div>
+
+                        </div>
+
+                    </fieldset>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-plus"></i>Register</button>
+                </div>
+            }
+        </div>
+    </div>
+
+}

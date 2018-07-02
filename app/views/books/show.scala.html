@@ -3,8 +3,9 @@
 
 @layout(book.title){
     <h2>@book.title</h2>
+    <p>@Html(book.details)</p>
     <p>Price : @book.price $</p>
-    <p>Author : @book.author</p>
+    <p>Author : @book.author.name</p>
 
     <a class="btn btn-primary" href="@routes.BooksController.edit(book.id)">Edit</a>
 
