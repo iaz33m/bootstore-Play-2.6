@@ -46,18 +46,27 @@
                                     <i class="glyphicon glyphicon-user"></i>
                                     Authors</a></li>
 
-                                <li><a href="#">@Secured.USER.name</a></li>
-
-                                <li><a href="@routes.AuthController.logout()">Logout</a></li>
-
-                            }
-
-                            @if(Secured.GUEST()){
-                                <li><a href="@routes.AuthController.register()">Register</a></li>
-                                <li><a href="@routes.AuthController.login()">Login</a></li>
                             }
 
                         </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+
+                            @if(Secured.CHECK()){
+                                <li class="dropdown navbar-right"><a class="dropdown-toggle" data-toggle="dropdown" href="#">@Secured.USER().name <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="@routes.AuthController.logout()">Logout</a></li>
+                                    </ul>
+                                </li>
+                            }
+
+                            @if(!Secured.CHECK()){
+                                <li><a href="@routes.AuthController.register()"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                                <li><a href="@routes.AuthController.login()"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                            }
+
+                        </ul>
+
                     </div>
                 </div>
             </div>

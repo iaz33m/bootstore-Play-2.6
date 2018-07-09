@@ -70,22 +70,26 @@ public class BooksController  extends Controller{
         Http.MultipartFormData<File> body = request().body().asMultipartFormData();
 
         Http.MultipartFormData.FilePart<File> picture = body.getFile("cover");
+        Http.MultipartFormData.FilePart<File> pdf = body.getFile("pdf");
 
-        if (picture == null) {
-            flash("danger", "Book Cover is missing.");
+
+        if (picture == null || pdf == null) {
+            flash("danger", "Book Cover or pdf is missing.");
             return badRequest(create.render(bookForm,authors,tags));
         }
 
         String contentType = picture.getContentType();
+        String pdfContentType = pdf.getContentType();
 
-        if(!contentType.contains("image")){
-            flash("danger", "Image is required.");
+        if((!contentType.contains("image")) || (!pdfContentType.contains("pdf"))){
+            flash("danger", "Image or pdf is required.");
             return badRequest(create.render(bookForm,authors,tags));
         }
 
         String uploadFileName = this.saveFile(picture);
+        String pdfFIle = this.saveFile(pdf);
 
-        if(uploadFileName == null){
+        if(uploadFileName == null || pdfFIle == null){
             flash("danger", "Unable to upload file to uploads dir, please try again.");
             return badRequest(create.render(bookForm,authors,tags));
         }
@@ -96,6 +100,7 @@ public class BooksController  extends Controller{
 
         Book book = bookForm.get();
         book.cover = uploadFileName;
+        book.pdf = pdfFIle;
         book.author = User.find.byId(authorEmail);
 
         book.tags = Book.parseTagsFromRequest(input);

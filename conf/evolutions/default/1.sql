@@ -20,6 +20,7 @@ create table books (
   title                         varchar(255),
   price                         integer,
   cover                         varchar(255),
+  pdf                           varchar(255),
   details                       LONGTEXT,
   author_email                  varchar(255) not null,
   constraint pk_books primary key (id)
@@ -59,16 +60,16 @@ create index ix_books_tags_tags on books_tags (tags_id);
 
 # --- !Downs
 
-alter table addresses drop constraint if exists fk_addresses_user_email;
+alter table addresses drop foreign key fk_addresses_user_email;
 
-alter table books drop constraint if exists fk_books_author_email;
-drop index if exists ix_books_author_email;
+alter table books drop foreign key fk_books_author_email;
+drop index ix_books_author_email on books;
 
-alter table books_tags drop constraint if exists fk_books_tags_books;
-drop index if exists ix_books_tags_books;
+alter table books_tags drop foreign key fk_books_tags_books;
+drop index ix_books_tags_books on books_tags;
 
-alter table books_tags drop constraint if exists fk_books_tags_tags;
-drop index if exists ix_books_tags_tags;
+alter table books_tags drop foreign key fk_books_tags_tags;
+drop index ix_books_tags_tags on books_tags;
 
 drop table if exists addresses;
 

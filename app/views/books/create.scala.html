@@ -22,7 +22,14 @@
     <h1>Create Book</h1>
 
     @helper.form(action = routes.BooksController.save(),'enctype -> "multipart/form-data"){
+
         @_booksFormFields(bookFrom,authors,null,tags,List[Tag]())
+
+        <div class="form-group">
+            <label for="pdf">Book PDF</label>
+            <input type="file" name="pdf">
+        </div>
+
         <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-plus"></i> Create Book</button>
     }
 }

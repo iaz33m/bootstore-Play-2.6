@@ -1,18 +1,27 @@
+@import controllers.Auth.Secured
 @(book: Book)
 @import helper._
 
 @layout(book.title){
+
     <h2>@book.title</h2>
-    <p>@Html(book.details)</p>
+
     <p>Price : @book.price $</p>
     <p>Author : @book.author.name</p>
 
-    <a class="btn btn-primary" href="@routes.BooksController.edit(book.id)">Edit</a>
+    <a class="btn btn-success" target="_blank" href="/assets/uploads/@book.pdf">Download</a>
 
-    <button class="btn btn-danger" onclick="sendDeleteRequest(
-        '@routes.BooksController.destroy(book.id)',
-        '@routes.BooksController.index()',
-        '@CSRF.getToken.value'
-    )">Delete</button>
+    @if(Secured.CHECK()){
+
+        <a class="btn btn-primary" href="@routes.BooksController.edit(book.id)">Edit</a>
+
+        <button class="btn btn-danger" onclick="sendDeleteRequest(
+                '@routes.BooksController.destroy(book.id)',
+                '@routes.BooksController.index()',
+                '@CSRF.getToken.value'
+        )">Delete</button>
+    }
+
+    <p>@Html(book.details)</p>
 
 }

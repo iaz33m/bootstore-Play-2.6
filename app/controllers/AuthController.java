@@ -40,11 +40,17 @@ public class AuthController extends Controller {
 
 
     public Result register(){
+        if(Secured.CHECK()){
+            return redirect(routes.BooksController.index());
+        }
         Form<User> form = ff.form(User.class);
         return ok(register.render(form));
     }
 
     public Result login(){
+        if(Secured.CHECK()){
+            return redirect(routes.BooksController.index());
+        }
         Form<User> form = ff.form(User.class);
         return ok(login.render(form));
     }
@@ -84,7 +90,7 @@ public class AuthController extends Controller {
 
         flash("success","Registered Successfully.");
 
-        return redirect(routes.AuthorController.index());
+        return redirect(routes.AuthController.login());
     }
 
     public Result auth(){
@@ -107,7 +113,6 @@ public class AuthController extends Controller {
         }
 
         session("email", email);
-        Secured.USER = user;
 
         return redirect(routes.AuthorController.index());
     }

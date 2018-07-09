@@ -8,8 +8,6 @@ import play.mvc.Security;
 
 public class Secured extends Security.Authenticator {
 
-    public static User USER;
-
     @Override
     public String getUsername(Http.Context ctx) {
         return ctx.session().get("email");
@@ -20,11 +18,19 @@ public class Secured extends Security.Authenticator {
         return redirect(routes.AuthController.login());
     }
 
-    public static boolean CHECK(){
-        return (USER != null);
+
+    public static String GET_USER(){
+        Http.Context ctx = Http.Context.current();
+        return ctx.session().get("email");
     }
 
-    public static boolean GUEST(){
-        return (USER == null);
+    public static boolean CHECK(){
+        return (GET_USER() != null);
     }
+
+    public static User USER(){
+        return CHECK() ? User.find.byId(GET_USER()):null;
+    }
+
+
 }

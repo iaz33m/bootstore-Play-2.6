@@ -1,3 +1,4 @@
+@import controllers.Auth.Secured
 @(books : List[Book],title:String)
 
 @layout(title){
@@ -24,7 +25,9 @@
                     @tag.name
                 }</td>
                 <td>@book.author.name</td>
-                <td><a class="btn btn-primary btn-sm" href="@routes.BooksController.edit(book.id)">Edit</a></td>
+                @if(Secured.CHECK()){
+                    <td><a class="btn btn-primary btn-sm" href="@routes.BooksController.edit(book.id)">Edit</a></td>
+                }
             </tr>
         }
 

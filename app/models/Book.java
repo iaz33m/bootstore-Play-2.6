@@ -29,6 +29,7 @@ public class Book extends Model {
     public Integer price;
 
     public String cover;
+    public String pdf;
 
     @Column(columnDefinition = "LONGTEXT")
     public String details;
